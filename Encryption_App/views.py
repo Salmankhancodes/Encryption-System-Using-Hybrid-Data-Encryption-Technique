@@ -62,16 +62,73 @@ def fiboEncryption ( data , password ) :
     return ciphertext
 
 
+def XorCipher ( data ,pas) :
+    key="K"
+    for i in range ( len ( data ) ) :
+        data = data [ :i ] + chr ( ord ( data [ i ] ) ^ ord ( key ) ) + data [ i + 1 : ]
+
+    return data
+
+def pnSequence ( data ) :
+    data=data.encode()
+    state=[0,0,0,1,0,1,0,1,0,1,1]
+    poly = [ 2 , 2 , 3 , 4 , 2 ]
+    from pylfsr import LFSR
+    l = LFSR ( fpoly=poly , initstate=state )
+    ciphertext=b""
+    allseq = l.runFullCycle ( )
+    seq = ""
+    index = 0
+    for x in allseq :
+        seq += str ( x )
+    for i in range ( len ( data ) ) :
+        newseq = seq [ index :index + 8 ]
+
+        ciphertext += bytes ( [ int ( data [ i ] ) ^ int ( newseq , 2 ) ] )
+        index += 8
+
+
+    return ciphertext
+
+
+
+
+
+
 def index(request):
-    context={'Encrypteddata':data}
+    data=""
+    key=""
+    context={'Encrypteddata':data,
+    'Segmentationkey':key}
     return render(request,"index.html",context)
 
 def encryptionalgo(request):
-    # return render(request,"index.html")
-    return HttpResponse("This is encryption function test")
+    data=request.POST.get('plaintext')
+    password=request.POST.get('password')
+
+    splitted_data = split_string ( data )
+
+
+    fi=fiboEncryption( splitted_data [ 0 ] , password )
+    xo=XorCipher( splitted_data [ 1 ] ,password[-1] )
+    pn=pnSequence(splitted_data[2])
+    key=len(splitted_data[0])
+
+    context={'fi':fi,
+             'xo':xo,
+             'pn':pn,
+             'key':key}
+    
+    return render(request,"encrypt.html",context)
 
 
 
 def decryptionalgo(request):
-    # return render(request,"index.html")
-    return HttpResponse("This is decryption function test")
+    data="some decrypted text"
+
+
+
+    context={'data':data}
+
+    return render(request,"decrypt.html",context)
+    # return HttpResponse("This is decryption function test")
