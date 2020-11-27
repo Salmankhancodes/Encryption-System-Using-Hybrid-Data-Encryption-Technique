@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+
 # Create your views here.
 
 
@@ -91,16 +92,35 @@ def pnSequence ( data ) :
     return ciphertext
 
 
+def Decrypt_Fibonacci(data,password):
+    lenofpassword=len(password)
 
+    rs=fibogen(lenofpassword)
+
+    for i in rs:
+        new = ""
+        for ch in range(len(data)):
+            if ch % 2 != 0:
+                x = chr(ord(data[ch]) - i)
+                new += x
+            else:
+                x=ord(data[ch])+i
+                if x>110000:
+                    x=abs(x-110000)
+                x=chr(x)
+                new += x
+
+        data = new
+    data=data[:len(data)-lenofpassword]
+
+
+    return data[::-1]
 
 
 
 def index(request):
-    data=""
-    key=""
-    context={'Encrypteddata':data,
-    'Segmentationkey':key}
-    return render(request,"index.html",context)
+
+    return render(request,"index.html")
 
 def encryptionalgo(request):
     data=request.POST.get('plaintext')
@@ -124,7 +144,9 @@ def encryptionalgo(request):
 
 
 def decryptionalgo(request):
-    data="some decrypted text"
+    request.POST.get('ctext')
+    request.POST.get('password')
+    request.POST.get('key')
 
 
 
