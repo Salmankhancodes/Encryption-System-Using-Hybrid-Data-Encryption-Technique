@@ -117,6 +117,40 @@ def Decrypt_Fibonacci(data,password):
     return data[::-1]
 
 
+def Decrypt_PN_Sequence(data):
+    from pylfsr import LFSR
+    state = [ 0 , 0 , 0 , 1 , 0 , 1 , 0 , 1 , 0 , 1 , 1 ]
+    poly = [ 2 , 2 , 3 , 4 , 2 ]
+    l = LFSR ( fpoly=poly , initstate=state )
+
+
+
+    allseq = l.runFullCycle ( )
+    seq =""
+    # print("i am in function",type(data))
+    import ast
+
+    eval_expr = ast.literal_eval (data)
+    ciphertext=eval_expr
+
+    plaintext = b""
+    seq_index = 0
+
+    for x in allseq :
+        seq += str ( x )
+
+
+
+    for counter in range ( len ( ciphertext ) ) :
+        ran_seq = seq [ seq_index : seq_index + 8 ]
+        plaintext += bytes ( [ int ( ciphertext [ counter ] ) ^ int ( ran_seq , 2 ) ] )
+        seq_index += 8
+    # print ( plaintext.decode ( ) )
+
+    return plaintext.decode()
+
+
+
 
 def index(request):
 
@@ -144,13 +178,20 @@ def encryptionalgo(request):
 
 
 def decryptionalgo(request):
-    request.POST.get('ctext')
-    request.POST.get('password')
-    request.POST.get('key')
+    data=request.POST.get('ctext')
+    password=request.POST.get('password')
+    seg=request.POST.get('key')
+    seg=int(seg)
+
+    dfib=Decrypt_Fibonacci(data[:seg+len(password)],password)
+    dxor=XorCipher(data[seg+len(password):seg+len(password)+seg],password[-1])
+    dpn=Decrypt_PN_Sequence(data[seg+len(password)+seg:])
+    context={'dfib':dfib,
+             'dxor':dxor,
+             'dpn':dpn}
 
 
 
-    context={'data':data}
 
     return render(request,"decrypt.html",context)
     # return HttpResponse("This is decryption function test")
