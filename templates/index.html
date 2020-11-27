@@ -17,23 +17,24 @@
     <form method="POST" action="/encryption">
 
     {% csrf_token %}
-    Plain text<input></input><br>
-    Password<input></input><br>
+    Plain text<input name="plaintext"></input><br>
+    Password<input name="password"></input><br>
     <button>Encrypt</button>
     </form>
 
-    <br><br><br>
+    <br><br>Encrypted Data= : {{ Encrypteddata }}<br>
+    Segmentation Key-:{{ Segmentationkey}}<br><br>
 
 
     <form method="POST" action="decryption">
     {% csrf_token %}
-    Encrypted Text <input></input><br>
-    Password<input></input><br>
-    Segmentation key<input></input>
+    Encrypted Text <input name="ctext"></input><br>
+    Password<input></input name="password"><br>
+    Segmentation key<input name-"key"></input>
     <button>Decrypt</button>    
     </form>
 
-    Encrypted Data= : {{ Encrypteddata }}
+    Encrypted Data= : {{ fi }}{{xo}}{{pn}}
     {% comment %} Segmentation Key=": {{ Segmentation Key }} {% endcomment %}
 
 
