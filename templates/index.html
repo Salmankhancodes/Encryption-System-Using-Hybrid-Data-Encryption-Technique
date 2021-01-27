@@ -1,49 +1,83 @@
+{% load static %}
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <form method="POST" action="/encryption">
+    <link rel="stylesheet" href={% static 'style.css' %}>
+    <title>Document</title>
 
-    {% csrf_token %}
-    Plain text<input name="plaintext"></input><br>
-    Password<input name="password"></input><br>
-    <button>Encrypt</button>
-    </form>
+</head>
 
-    <br><br>Encrypted Data= : {{ Encrypteddata }}<br>
-    Segmentation Key-:{{ Segmentationkey}}<br><br>
+<body>
+    <div class="main-div">
+        <div class="tabs">
+            <div class="tab encryption active"><h2>Encryption</h2></div>
+            <div class="tab decryption"><h2>Decryption</h2></div>
+        </div>
 
-
-    <form method="POST" action="decryption">
-    {% csrf_token %}
-    Encrypted Text <input name="ctext"></input><br>
-    Password<input></input name="password"><br>
-    Segmentation key<input name-"key"></input>
-    <button>Decrypt</button>    
-    </form>
-
-    Encrypted Data= : {{ fi }}{{xo}}{{pn}}
-    {% comment %} Segmentation Key=": {{ Segmentation Key }} {% endcomment %}
-
-
-
-
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+        <div class="form-div current" data-form="Encryption">
+        <h1>Encryption</h1>
         
-        <script src="" async defer></script>
-    </body>
+        <form method="POST" action="encryption">
+            {% csrf_token %}
+            <div class="input">
+                <label for="plaintext">Enter Plain text </label>
+                <input type="text" id="plaintext" name="plaintext">
+            </div>
+
+            <div class="input">
+                <label for="password">Enter password </label>
+                <input type="password" id="password"name="password">
+            </div>
+            
+            <div class="form-submit">
+                <input type="submit" value="encryption">
+            </div>
+            <div class="success">
+                <h2>Encrypted Data -> {{fi}}{{ xo }}{{ pn }}</h2><br>
+                <h2>Segmentation Key -> {{ key }}</h2>
+            </div>
+
+            </form>
+            
+    </div>
+
+        <div class="form-div" data-form="Decryption">
+        
+            <h1>Decryption</h1>
+        
+            <form method="POST"action="decryption">
+                {% csrf_token %}
+            <div class="input">
+                <label for="decryptiontext">Enter Encrypted text </label>
+                <input type="text" id="decryptiontext" name="ctext">
+            </div>
+
+            <div class="input">
+                <label for="password">Enter password </label>
+                <input type="password" id="password" name="password">
+            </div>
+
+            <div class="input">
+                <label for="key">Enter key </label>
+                <input type="number" id="key" name="key">
+            </div>
+            
+            <div class="form-submit">
+                <input type="submit" value="decryption">
+            </div>
+            <div class="success">
+                <h2>Decrypted data -> &nbsp;{{ dfib }}{{ dxor }}{{ dpn }}</h2><br>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+<script src={% static 'main.js' %}></script>
+
+</body>
 </html>

@@ -1,0 +1,100 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #202020;
+    font-family: 'lato',sans-serif;
+    font-size: 1em;
+    color: #eee;
+}
+
+::selection{
+    background-color: goldenrod;
+}
+input{
+    margin-left: 50%;
+}
+
+.tabbed{
+    width: 700px;
+    margin: 50px auto;
+    
+}
+
+.tabbed > input{
+    display: none;
+}
+
+.tabbed > label{
+    display: block;
+    float: left;
+    padding: 12px 20px;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tabbed > label:hover,
+.tabbed > input:checked +label{
+    background-color: goldenrod;
+
+}
+
+.tabs{
+    clear:both;
+    perspective: 600px;
+}
+
+.tabs>div{
+    widows: 700px;
+    position: absolute;
+    border: 2px solid goldenrod;
+    padding: 10px 30px 40px;
+    line-height: 1.4em;
+    opacity: 0;
+    z-index: 0;
+    transform: rotateX(20deg);
+    transform-origin: top center;
+    transition: opacity 0.3s, transform 1s;
+}
+
+#tab_one:checked~.tabs>div:nth-of-type(1),
+#tab_two:checked~.tabs>div:nth-of-type(2),
+#tab_three:checked~.tabs>div:nth-of-type(3){
+transform: rotateX(0deg);
+opacity: 1;
+z-index: 1;
+width: 800px;
+height:400px;
+}
+
+@media screen and (max-width:700px){
+    .tabbed{
+    width: 400px;
+}
+
+    .tabbed > label{
+        display: none;
+    }
+
+    .tabs > div{
+        width: 400px;
+        border: none;
+        padding: 0;
+        opacity: 1;
+        position: relative;
+        transform: none;
+        margin-bottom: 60px;
+    }
+    .tabs >div h2{
+        border-bottom: 2px solid goldenrod;
+        padding-bottom: 0.5em;
+    }}
+
+
+
+    .resultbox{
+        margin-top: 5%;
+        border : 2px solid goldenrod
+    }

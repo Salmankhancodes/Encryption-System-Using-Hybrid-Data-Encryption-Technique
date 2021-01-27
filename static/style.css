@@ -1,0 +1,143 @@
+*{
+margin : 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+
+html,
+body{
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode',  Verdana, sans-serif;
+display: flex;
+height: 100vh;
+justify-content: center;
+align-items: center;
+background-color: #e6eeff;
+}
+
+.main-div{
+background-color:#1a2a4d;
+padding: 3rem;
+width: 700px;
+
+}
+.tabs{
+display: flex;
+}
+
+.tab{
+flex: 1;
+text-align: center;
+color: #fff;
+cursor: pointer;
+border: 2px solid #02a1fd;
+transition: background 300ms;
+}
+
+.tab:hover{
+background-color: #02a1fd;
+}
+
+.tab:nth-child(1){
+border-radius: 25px 0 0 25px;
+}
+
+.tab:nth-child(2){
+border-radius: 0 25px 25px 0;
+}
+
+.tab h2{
+padding: .5rem 1rem;
+}
+
+.active{
+background-color: #02a1fd;
+}
+
+.form-div{
+display: none;
+opacity: 0;
+}
+
+.current{
+display: block;
+animation: fadeIn 500ms ease-in forwards;
+}
+
+.form-div h1{
+text-align: center;
+color: #fff;
+padding: 1rem 0;
+
+}
+
+.input{
+padding: .5rem 1rem;
+}
+
+.input label{
+padding: 0.3rem 0.6rem;
+font-size: 1.3rem;
+color: #fff;
+}
+
+.req{
+color: #02a1fd;
+}
+
+.input input{
+width: 100%;
+padding: .3rem;
+font-size: 1.3rem; 
+background-color: transparent;
+color: #fff;
+border: 1px solid #fff;
+outline: 0;
+}
+
+.input input:focus{
+border: 1px solid #02a1fd;
+}
+
+.form-submit{
+padding: .5rem 1rem;
+}
+
+.form-submit input{
+padding: 1rem;
+width: 100%;
+font-size: 1.5rem;
+background-color: #02a1fd;
+border: 0;
+color: #fff;
+}
+
+.form-submit input:hover{
+background-color: #02886d;
+}
+
+.success{
+    margin-top: 5%;
+    height: 130px;
+    /* letter-spacing: normal; */
+    list-style: none;
+    background-color: #2e6da4;
+    font-size: 15px;
+    color: white;
+    /* box-shadow: 12px 12px 12px #e61c66; */
+    text-align: start;
+}
+
+.success h2{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color:yellow;
+}
+
+@keyframes fadeIn{
+from{
+    opacity: 0;
+}
+to{
+    opacity: 1;
+}
+}

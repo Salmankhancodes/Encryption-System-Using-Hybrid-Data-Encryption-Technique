@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib import messages
 
 # Create your views here.
 
@@ -158,7 +159,7 @@ def index(request):
 
 def encryptionalgo(request):
     data=request.POST.get('plaintext')
-    password=request.POST.get('password')
+    password=request.POST.get('password')[:5]
 
     splitted_data = split_string ( data )
 
@@ -167,31 +168,31 @@ def encryptionalgo(request):
     xo=XorCipher( splitted_data [ 1 ] ,password[-1] )
     pn=pnSequence(splitted_data[2])
     key=len(splitted_data[0])
+    # message=fi+xo+pn
 
     context={'fi':fi,
              'xo':xo,
              'pn':pn,
-             'key':key}
-    
-    return render(request,"encrypt.html",context)
+             'key':key,
+    }
+    return render(request,"index.html",context)
 
 
 
 def decryptionalgo(request):
     data=request.POST.get('ctext')
-    password=request.POST.get('password')
+    password=request.POST.get('password')[:5]
     seg=request.POST.get('key')
     seg=int(seg)
 
     dfib=Decrypt_Fibonacci(data[:seg+len(password)],password)
     dxor=XorCipher(data[seg+len(password):seg+len(password)+seg],password[-1])
     dpn=Decrypt_PN_Sequence(data[seg+len(password)+seg:])
+    # message=dfib+dxor+dpn
     context={'dfib':dfib,
              'dxor':dxor,
              'dpn':dpn}
 
 
-
-
-    return render(request,"decrypt.html",context)
+    return render(request,"index.html",context)
     # return HttpResponse("This is decryption function test")

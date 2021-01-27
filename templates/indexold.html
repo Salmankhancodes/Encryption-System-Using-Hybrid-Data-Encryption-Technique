@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href={% static 'style.css' %}>
+
+</head>
+<body>
+
+    <div class="tabbed">
+        <input type="radio" name="tabs" id="tab_one" checked>
+        <label for="tab_one">Encryption</label>
+
+        <input type="radio" name="tabs" id="tab_two" checked>
+        <label for="tab_two">Decryption</label>
+
+        <div class="tabs">
+            <div class="">
+                <h2>Encryption</h2>
+                <form method="POST" action="encryption">
+                {% csrf_token %}
+                <label for="plaintext">Enter Plain text here</label>
+                    <input type="text" name="plaintext"></input><br>
+                
+                <label for="password">Enter Password</label>
+                    <input type="password" name="password"></input><br>
+            
+                    <button>Encrypt</button>
+                    <br>
+                <h2>Encrypted Data: {{fi}}{{ xo }}{{ pn }}</h2>
+                <h2>Segmentation Key:{{ key }}</h2>
+                {% comment %} <h3>here is other version: {{message}}</h3> {% endcomment %}
+                
+            </form>
+            </div>
+
+            <div class="">
+                <h2>Decryption</h2>
+                <form method="POST" action="decryption">
+                {% csrf_token %}
+                    Enter Encrypted text here<input type="text" name="ctext"></input><br>
+                    Enter Password<input type="text" name="password"></input><br>
+                    Enter segmentation key<input type="text" name="key"></input>
+                    <button>Decrypt</button>
+
+                    <br><br>
+                    <h2>Decrypted Data:</h2>
+                    <div class="resultbox">
+                    <h1>{{ dfib }}{{ dxor }}{{ dpn }}</h1>
+                    {% comment %} <h2>{{message}}</h2> {% endcomment %}
+                    </div>
+            
+    
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+</body>
+</html>
